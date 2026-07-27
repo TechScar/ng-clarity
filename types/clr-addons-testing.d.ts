@@ -1,12 +1,14 @@
 import * as i0 from '@angular/core';
-import { TemplateRef, EventEmitter, OnInit, ViewContainerRef, ComponentFactoryResolver, DebugElement, PipeTransform } from '@angular/core';
+import { ViewContainerRef, ElementRef, EmbeddedViewRef, TemplateRef, EventEmitter, OnInit, ComponentFactoryResolver, DebugElement, PipeTransform } from '@angular/core';
 import * as rxjs from 'rxjs';
 import { ReplaySubject } from 'rxjs';
 import { ZoomLevel } from '@clr/addons/a11y';
+import { AppfxCard } from '@clr/addons/card-container';
 import { ClrDatagridVirtualScrollRangeInterface, ClrDatagrid } from '@clr/angular/data/datagrid';
 import { ActionDefinition } from '@clr/addons/datagrid';
 import { ComponentFixture } from '@angular/core/testing';
 import { FilterMode, FilterablePropertyDefinition, PropertyFilter } from '@clr/addons/datagrid-filters';
+import { PropertyViewStrings, PropertyViewMessageModel, PropertyViewPropertyModel } from '@clr/addons/property-view';
 
 declare class MockRequiredFieldLegendComponent {
     static ɵfac: i0.ɵɵFactoryDeclaration<MockRequiredFieldLegendComponent, never>;
@@ -21,6 +23,98 @@ declare class ZoomLevelServiceMock {
     resizeSubject: ReplaySubject<ZoomLevel>;
     onChange: rxjs.Observable<ZoomLevel>;
 }
+
+declare class MockAppfxCardContainerComponent {
+    containerId: string;
+    cards: unknown[];
+    persistenceStore?: unknown;
+    showCardContainerSettings: boolean;
+    dragDropEnabled: boolean;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MockAppfxCardContainerComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MockAppfxCardContainerComponent, "appfx-card-container", never, { "containerId": { "alias": "containerId"; "required": false; }; "cards": { "alias": "cards"; "required": false; }; "persistenceStore": { "alias": "persistenceStore"; "required": false; }; "showCardContainerSettings": { "alias": "showCardContainerSettings"; "required": false; }; "dragDropEnabled": { "alias": "dragDropEnabled"; "required": false; }; }, {}, never, never, false, never>;
+}
+declare class MockAppfxCardContainerStandaloneComponent extends MockAppfxCardContainerComponent {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MockAppfxCardContainerStandaloneComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MockAppfxCardContainerStandaloneComponent, "appfx-card-container", never, {}, {}, never, never, true, never>;
+}
+
+declare class MockContainerService {
+    getCardOrder(): void;
+    moveCard(): void;
+    getVisibleCardsCount(): void;
+}
+declare class MockA11yService {
+    isSelected(): void;
+    isDraggableOver(): void;
+    selectCard(): void;
+    moveDropPosition(): void;
+}
+declare class MockDragDropService {
+    onDragStart(): void;
+    onDragDrop(): void;
+}
+declare class MockLayoutService {
+    updateCardSize(): void;
+}
+declare class MockRenderer2 {
+    setStyle(el: any, name: string, style: string): void;
+    removeStyle(el: any, name: string): void;
+}
+declare class MockCardContainerComponent {
+    cardContainer: ViewContainerRef;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MockCardContainerComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MockCardContainerComponent, "ng-component", never, {}, {}, never, never, false, never>;
+}
+declare class SampleCardComponent {
+    eleRef: ElementRef;
+    constructor(el: ElementRef);
+    static ɵfac: i0.ɵɵFactoryDeclaration<SampleCardComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SampleCardComponent, "ng-component", never, {}, {}, never, never, false, never>;
+}
+declare class SampleCardWithoutFooterComponent {
+    eleRef: ElementRef;
+    constructor(el: ElementRef);
+    static ɵfac: i0.ɵɵFactoryDeclaration<SampleCardWithoutFooterComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SampleCardWithoutFooterComponent, "ng-component", never, {}, {}, never, never, false, never>;
+}
+declare class SampleCardWithoutHeaderComponent {
+    eleRef: ElementRef;
+    constructor(el: ElementRef);
+    static ɵfac: i0.ɵɵFactoryDeclaration<SampleCardWithoutHeaderComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SampleCardWithoutHeaderComponent, "ng-component", never, {}, {}, never, never, false, never>;
+}
+declare class MockElementRef extends ElementRef {
+    nativeElement: {
+        querySelector: () => void;
+    };
+}
+declare const sortCardsFn: (a: AppfxCard, b: AppfxCard) => number;
+declare const sampleCards: ({
+    id: string;
+    title: string;
+    componentClass: typeof SampleCardComponent;
+    hidden: boolean;
+    order: number;
+    view: EmbeddedViewRef<void>;
+    canHide?: undefined;
+} | {
+    id: string;
+    title: string;
+    componentClass: typeof SampleCardComponent;
+    hidden: boolean;
+    canHide: boolean;
+    order: number;
+    view: EmbeddedViewRef<void>;
+})[];
+declare const sampleCardsSettings: {
+    id: string;
+    hidden: boolean;
+    order: number;
+}[];
+declare const cardIdToOrder: {
+    [x: string]: number;
+    cardWithDefaultOrder: number;
+};
 
 declare class MockAppfxDatagridComponent {
     gridItems: any;
@@ -255,4 +349,57 @@ declare class MockDatagridFiltersStandaloneComponent extends MockDatagridFilters
     static ɵcmp: i0.ɵɵComponentDeclaration<MockDatagridFiltersStandaloneComponent, "appfx-datagrid-filters", never, {}, {}, never, never, true, never>;
 }
 
-export { FilterInputTestHelper, GridCellTestHelper, GridFooterTestHelper, GridHelper, GridPlaceholder, GridRowTestHelper, MockAppfxDatagridComponent, MockDatagridActionBarComponent, MockDatagridCellContainerComponent, MockDatagridColumnToggleComponent, MockDatagridFiltersComponent, MockDatagridFiltersStandaloneComponent, MockDatagridPersistSettingsDirective, MockDatagridPreserveSelectionDirective, MockIsRowSelectablePipe, MockRequiredFieldLegendComponent, MockRequiredFieldLegendStandaloneComponent, MockStandaloneDatagridComponent, ZoomLevelServiceMock };
+declare class MockAppfxMenuActionComponent {
+    actionId: string;
+    iconClass?: string;
+    text?: string;
+    shortcut?: string;
+    enabled?: boolean;
+    handle: EventEmitter<void>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MockAppfxMenuActionComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MockAppfxMenuActionComponent, "appfx-menu-action", never, { "actionId": { "alias": "actionId"; "required": false; }; "iconClass": { "alias": "iconClass"; "required": false; }; "text": { "alias": "text"; "required": false; }; "shortcut": { "alias": "shortcut"; "required": false; }; "enabled": { "alias": "enabled"; "required": false; }; }, { "handle": "handle"; }, never, ["*"], false, never>;
+}
+declare class MockAppfxMenuActionStandaloneComponent extends MockAppfxMenuActionComponent {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MockAppfxMenuActionStandaloneComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MockAppfxMenuActionStandaloneComponent, "appfx-menu-action", never, {}, {}, never, ["*"], true, never>;
+}
+
+declare class MockAppfxMenuComponent {
+    text: string;
+    opened: EventEmitter<void>;
+    closed: EventEmitter<void>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MockAppfxMenuComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MockAppfxMenuComponent, "appfx-menu", never, { "text": { "alias": "text"; "required": false; }; }, { "opened": "opened"; "closed": "closed"; }, never, ["*"], false, never>;
+}
+declare class MockAppfxMenuStandaloneComponent extends MockAppfxMenuComponent {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MockAppfxMenuStandaloneComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MockAppfxMenuStandaloneComponent, "appfx-menu", never, {}, {}, never, ["*"], true, never>;
+}
+
+declare class MockPropertyViewComponent {
+    data: any;
+    config: any;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MockPropertyViewComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MockPropertyViewComponent, "appfx-property-view", never, { "data": { "alias": "data"; "required": false; }; "config": { "alias": "config"; "required": false; }; }, {}, never, never, false, never>;
+}
+declare class MockPropertyViewStandaloneComponent extends MockPropertyViewComponent {
+    static ɵfac: i0.ɵɵFactoryDeclaration<MockPropertyViewStandaloneComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MockPropertyViewStandaloneComponent, "appfx-property-view", never, {}, {}, never, never, true, never>;
+}
+
+/**
+ * Mock user-visible strings used in the 'appfx-property-view' library.
+ */
+declare class MockPropertyViewStrings extends PropertyViewStrings {
+    toggle: string;
+    actions: string;
+    categoryListItemsAreaLabel: string;
+    categoryListItemAreaLabel: string;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MockPropertyViewStrings, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<MockPropertyViewStrings>;
+}
+
+declare function verifyPropertyViewProperty(key: string, value: string[], propertyModel: PropertyViewPropertyModel): void;
+declare function verifyPropertyViewMessage(textValue: string, icon: string, messageModel: PropertyViewMessageModel): void;
+
+export { FilterInputTestHelper, GridCellTestHelper, GridFooterTestHelper, GridHelper, GridPlaceholder, GridRowTestHelper, MockA11yService, MockAppfxCardContainerComponent, MockAppfxCardContainerStandaloneComponent, MockAppfxDatagridComponent, MockAppfxMenuActionComponent, MockAppfxMenuActionStandaloneComponent, MockAppfxMenuComponent, MockAppfxMenuStandaloneComponent, MockCardContainerComponent, MockContainerService, MockDatagridActionBarComponent, MockDatagridCellContainerComponent, MockDatagridColumnToggleComponent, MockDatagridFiltersComponent, MockDatagridFiltersStandaloneComponent, MockDatagridPersistSettingsDirective, MockDatagridPreserveSelectionDirective, MockDragDropService, MockElementRef, MockIsRowSelectablePipe, MockLayoutService, MockPropertyViewComponent, MockPropertyViewStandaloneComponent, MockPropertyViewStrings, MockRenderer2, MockRequiredFieldLegendComponent, MockRequiredFieldLegendStandaloneComponent, MockStandaloneDatagridComponent, SampleCardComponent, SampleCardWithoutFooterComponent, SampleCardWithoutHeaderComponent, ZoomLevelServiceMock, cardIdToOrder, sampleCards, sampleCardsSettings, sortCardsFn, verifyPropertyViewMessage, verifyPropertyViewProperty };
